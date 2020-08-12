@@ -1,0 +1,109 @@
+[
+    {
+        "id": "a2713ad8.450728",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ca050232.d53c3",
+        "type": "mqtt in",
+        "z": "a2713ad8.450728",
+        "name": "davehome/sensor",
+        "topic": "davehome/sensor",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "3b0b777e.e2e038",
+        "x": 150,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "de29ff41.ab8c9",
+        "type": "openweathermap",
+        "z": "a2713ad8.450728",
+        "name": "Weather",
+        "wtype": "current",
+        "lon": "",
+        "lat": "",
+        "city": "Beijing",
+        "country": "China",
+        "language": "zh",
+        "x": 340,
+        "y": 300,
+        "wires": [
+            [
+                "21ce45cd.f3eeaa",
+                "e0fe6127.8ffa5"
+            ]
+        ]
+    },
+    {
+        "id": "21ce45cd.f3eeaa",
+        "type": "debug",
+        "z": "a2713ad8.450728",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 540,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "dbce26a9.81d338",
+        "type": "inject",
+        "z": "a2713ad8.450728",
+        "name": "Trigger",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "3",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "de29ff41.ab8c9"
+            ]
+        ]
+    },
+    {
+        "id": "e0fe6127.8ffa5",
+        "type": "freeboard",
+        "z": "a2713ad8.450728",
+        "name": "UI",
+        "x": 580,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3b0b777e.e2e038",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "broker_jmqtt",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
