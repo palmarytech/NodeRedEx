@@ -1,0 +1,131 @@
+[
+    {
+        "id": "a2713ad8.450728",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ca050232.d53c3",
+        "type": "mqtt in",
+        "z": "a2713ad8.450728",
+        "name": "davehome/sensor",
+        "topic": "davehome/sensor",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "3b0b777e.e2e038",
+        "x": 310,
+        "y": 380,
+        "wires": [
+            [
+                "99aaa62.b5fe558"
+            ]
+        ]
+    },
+    {
+        "id": "45c3660.4c2ba9c",
+        "type": "debug",
+        "z": "a2713ad8.450728",
+        "name": ">=100",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.value",
+        "targetType": "msg",
+        "x": 570,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "452be9e3.a795b8",
+        "type": "debug",
+        "z": "a2713ad8.450728",
+        "name": "<=60",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.value",
+        "targetType": "msg",
+        "x": 570,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "1e7eea78.454fa6",
+        "type": "function",
+        "z": "a2713ad8.450728",
+        "name": "switch branch",
+        "func": "if (msg.payload.value >= 100){\n    return [msg, null, null];\n}\nelse if (msg.payload.value <= 60){\n    return [null, msg, null];\n}\nelse {\n    return [null, null, msg];\n}\n",
+        "outputs": 3,
+        "noerr": 0,
+        "x": 340,
+        "y": 580,
+        "wires": [
+            [
+                "45c3660.4c2ba9c"
+            ],
+            [
+                "452be9e3.a795b8"
+            ],
+            [
+                "a7e7070c.a524e8"
+            ]
+        ]
+    },
+    {
+        "id": "a7e7070c.a524e8",
+        "type": "debug",
+        "z": "a2713ad8.450728",
+        "name": "other",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload.value",
+        "targetType": "msg",
+        "x": 570,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "99aaa62.b5fe558",
+        "type": "json",
+        "z": "a2713ad8.450728",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 310,
+        "y": 460,
+        "wires": [
+            [
+                "1e7eea78.454fa6"
+            ]
+        ]
+    },
+    {
+        "id": "3b0b777e.e2e038",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "broker_jmqtt",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
