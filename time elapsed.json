@@ -1,0 +1,136 @@
+[
+    {
+        "id": "a2713ad8.450728",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ca050232.d53c3",
+        "type": "mqtt in",
+        "z": "a2713ad8.450728",
+        "name": "davehome/sensor",
+        "topic": "davehome/sensor",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "3b0b777e.e2e038",
+        "x": 150,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "45c3660.4c2ba9c",
+        "type": "debug",
+        "z": "a2713ad8.450728",
+        "name": ">=100",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 810,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "bca2530.46346b",
+        "type": "inject",
+        "z": "a2713ad8.450728",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 380,
+        "y": 280,
+        "wires": [
+            [
+                "6f085968.189028"
+            ]
+        ]
+    },
+    {
+        "id": "6f085968.189028",
+        "type": "function",
+        "z": "a2713ad8.450728",
+        "name": "Time Start",
+        "func": "context.global.startTime = new Date().getTime();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 360,
+        "wires": [
+            [
+                "97ea4ae.d341db8"
+            ]
+        ]
+    },
+    {
+        "id": "fdb4fb50.fb13f8",
+        "type": "function",
+        "z": "a2713ad8.450728",
+        "name": "Time End",
+        "func": "var currentTime = new Date().getTime();\nvar timeElapsed = (currentTime - context.global.startTime);\nmsg.payload = \"Time elapsed is: \" + timeElapsed + \"ms\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 700,
+        "y": 360,
+        "wires": [
+            [
+                "45c3660.4c2ba9c"
+            ]
+        ]
+    },
+    {
+        "id": "97ea4ae.d341db8",
+        "type": "delay",
+        "z": "a2713ad8.450728",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 610,
+        "y": 280,
+        "wires": [
+            [
+                "fdb4fb50.fb13f8"
+            ]
+        ]
+    },
+    {
+        "id": "3b0b777e.e2e038",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "broker_jmqtt",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
