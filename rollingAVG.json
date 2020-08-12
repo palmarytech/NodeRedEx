@@ -1,0 +1,112 @@
+[
+    {
+        "id": "a2713ad8.450728",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ca050232.d53c3",
+        "type": "mqtt in",
+        "z": "a2713ad8.450728",
+        "name": "davehome/sensor",
+        "topic": "davehome/sensor",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "3b0b777e.e2e038",
+        "x": 150,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6a836727.2492a8",
+        "type": "inject",
+        "z": "a2713ad8.450728",
+        "name": "1s Trigger",
+        "topic": "",
+        "payload": "",
+        "payloadType": "num",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [
+                "b8d4e4c1.2c75e8"
+            ]
+        ]
+    },
+    {
+        "id": "b8d4e4c1.2c75e8",
+        "type": "function",
+        "z": "a2713ad8.450728",
+        "name": "sum",
+        "func": "if (!context.value) {\n  context.value = 0;\n}\nmsg.payload = {\n  value:context.value\n}\ncontext.value +=1;\nif (context.value > 9) {\n  context.value = 0;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 400,
+        "y": 260,
+        "wires": [
+            [
+                "a96ce0f6.cca74"
+            ]
+        ]
+    },
+    {
+        "id": "a96ce0f6.cca74",
+        "type": "function",
+        "z": "a2713ad8.450728",
+        "name": "rolling avg",
+        "func": "var currentTime = new Date().getTime();\nif (!context.lastTime) {\n    context.lastTime = currentTime;\n    context.sum = msg.payload.value;\n    context.count = 1;\n}\nif (currentTime-context.lastTime > 5000) {\n    // calculate average for previous messages\n    msg.payload.average = context.sum/context.count;\n    // start tracking average again\n    context.sum = msg.payload.value;\n    context.count = 1;\n    context.lastTime = currentTime;\n} else {\n    context.sum += msg.payload.value;\n    context.count +=1;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "db59cf95.e82cd"
+            ]
+        ]
+    },
+    {
+        "id": "db59cf95.e82cd",
+        "type": "debug",
+        "z": "a2713ad8.450728",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 410,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "3b0b777e.e2e038",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "broker_jmqtt",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
