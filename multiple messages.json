@@ -1,0 +1,99 @@
+[
+    {
+        "id": "a2713ad8.450728",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ca050232.d53c3",
+        "type": "mqtt in",
+        "z": "a2713ad8.450728",
+        "name": "davehome/sensor",
+        "topic": "davehome/sensor",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "3b0b777e.e2e038",
+        "x": 210,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "45c3660.4c2ba9c",
+        "type": "debug",
+        "z": "a2713ad8.450728",
+        "name": ">=100",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 730,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "1e7eea78.454fa6",
+        "type": "function",
+        "z": "a2713ad8.450728",
+        "name": "switch branch",
+        "func": "var msgList = [];\nfor (var i=0; i<10; i++) {\n  msgList.push({payload:i});\n}\nreturn [msgList];\n",
+        "outputs": 3,
+        "noerr": 0,
+        "x": 500,
+        "y": 280,
+        "wires": [
+            [
+                "45c3660.4c2ba9c"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "bca2530.46346b",
+        "type": "inject",
+        "z": "a2713ad8.450728",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 260,
+        "y": 300,
+        "wires": [
+            [
+                "1e7eea78.454fa6"
+            ]
+        ]
+    },
+    {
+        "id": "3b0b777e.e2e038",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "broker_jmqtt",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
