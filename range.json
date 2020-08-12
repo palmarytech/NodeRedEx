@@ -1,0 +1,234 @@
+[
+    {
+        "id": "a2713ad8.450728",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ca050232.d53c3",
+        "type": "mqtt in",
+        "z": "a2713ad8.450728",
+        "name": "davehome/sensor",
+        "topic": "davehome/sensor",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "3b0b777e.e2e038",
+        "x": 110,
+        "y": 500,
+        "wires": [
+            [
+                "952b8a07.1ae2f8"
+            ]
+        ]
+    },
+    {
+        "id": "952b8a07.1ae2f8",
+        "type": "json",
+        "z": "a2713ad8.450728",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 180,
+        "y": 580,
+        "wires": [
+            [
+                "c20ec7f.23d7238"
+            ]
+        ]
+    },
+    {
+        "id": "45c3660.4c2ba9c",
+        "type": "debug",
+        "z": "a2713ad8.450728",
+        "name": "TrueConsole",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 850,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "c20ec7f.23d7238",
+        "type": "switch",
+        "z": "a2713ad8.450728",
+        "name": "Switch",
+        "property": "payload.analyze",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 310,
+        "y": 580,
+        "wires": [
+            [
+                "dbda4b75.657668"
+            ],
+            [
+                "348d5cc7.7dbca4"
+            ]
+        ]
+    },
+    {
+        "id": "348d5cc7.7dbca4",
+        "type": "change",
+        "z": "a2713ad8.450728",
+        "name": "Change",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 460,
+        "y": 660,
+        "wires": [
+            [
+                "f16718af.2a8c28"
+            ]
+        ]
+    },
+    {
+        "id": "452be9e3.a795b8",
+        "type": "debug",
+        "z": "a2713ad8.450728",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 890,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "dbda4b75.657668",
+        "type": "change",
+        "z": "a2713ad8.450728",
+        "name": "msg.payload.value",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 460,
+        "wires": [
+            [
+                "18a1aee9.1b6861"
+            ]
+        ]
+    },
+    {
+        "id": "18a1aee9.1b6861",
+        "type": "rbe",
+        "z": "a2713ad8.450728",
+        "name": "> 20%value",
+        "func": "deadband",
+        "gap": "20%",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 670,
+        "y": 400,
+        "wires": [
+            [
+                "45c3660.4c2ba9c"
+            ]
+        ]
+    },
+    {
+        "id": "44cd5510.28d4fc",
+        "type": "comment",
+        "z": "a2713ad8.450728",
+        "name": "True Branch",
+        "info": "",
+        "x": 490,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "ed3a8ec9.a6b8f",
+        "type": "comment",
+        "z": "a2713ad8.450728",
+        "name": "False Branch",
+        "info": "",
+        "x": 490,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "f16718af.2a8c28",
+        "type": "range",
+        "z": "a2713ad8.450728",
+        "minin": "0",
+        "maxin": "2000",
+        "minout": "5535",
+        "maxout": "27648",
+        "action": "clamp",
+        "round": false,
+        "property": "payload",
+        "name": "Anolog Convert",
+        "x": 680,
+        "y": 680,
+        "wires": [
+            [
+                "452be9e3.a795b8"
+            ]
+        ]
+    },
+    {
+        "id": "3b0b777e.e2e038",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "broker_jmqtt",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]
